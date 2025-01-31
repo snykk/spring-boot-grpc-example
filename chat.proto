@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.najibfikri.grpc";
+
+service ChatService {
+    // Unary Request-Response
+    rpc SendMessage (MessageRequest) returns (MessageResponse);
+
+    // Client Streaming - Client sends many messages, and the Server responds once
+    rpc StreamMessages (stream MessageRequest) returns (MessageResponse);
+
+    // Server Streaming - Server sends multiple responses to a single request
+    rpc SendStreamedMessages (MessageRequest) returns (stream MessageResponse);
+
+    // Bidirectional Streaming - Client and Server exchange messages in real-time
+    rpc ChatStream (stream MessageRequest) returns (stream MessageResponse);
+}
+
+message MessageRequest {
+    string sender = 1;
+    string message = 2;
+}
+
+message MessageResponse {
+    string sender = 1;
+    string message = 2;
+}
